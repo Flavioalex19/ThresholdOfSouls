@@ -15,13 +15,20 @@ public class PlayerInput : MonoBehaviour
     bool _isMoving;//Verify if the player is in movement
     #endregion
 
+    /*
+    #region Dash Variables
+    public bool _canDash = true;
+    public bool _isDashing = false;//if the player is in dash motion
+    #endregion
+    */
+
     #region Interaction Variables
     bool _canInteract = false;//If the player is allow to interact
     bool _isInteracting = false;//Verify if thge player is interacting with something
     #endregion
 
     public bool _isUsingSearchDevice = false;//If the player can use the search Device/Vision
-
+    
 
     //Components
     Movement cc_movement;
@@ -49,6 +56,10 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (cc_movement.GetCanDash() && Input.GetKeyDown(KeyCode.Space))
+        {
+            cc_movement.SetDashRequested(true);//this will change in the player input
+        }
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
@@ -83,6 +94,8 @@ public class PlayerInput : MonoBehaviour
             cc_move = v * Vector3.forward + h * Vector3.right;
         }
         cc_movement.Move(cc_move, _isMoving);
+
+
     }
 
     #region Get & Set

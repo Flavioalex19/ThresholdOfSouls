@@ -533,10 +533,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 546e426860dce7543af259ce2eea1fa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stationaryTurnSpeed: 720
-  _movingTurnSpeed: 720
-  _characterSpeed: 5
-  _forwardAmount: 5
+  stationaryTurnSpeed: 720
+  movingTurnSpeed: 720
+  characterSpeed: 5
+  dashDistance: 5
+  dashDuration: 0.5
+  dashCooldown: 1
+  stopDuration: 0.5
 --- !u!54 &1209701938
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -565,6 +568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0036953ae54da3a41a2472fa69a8d236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isUsingSearchDevice: 0
 --- !u!95 &1209701940
 Animator:
   serializedVersion: 5

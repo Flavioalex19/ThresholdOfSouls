@@ -20,7 +20,7 @@ public class Movement : MonoBehaviour
     Vector3 groundNormal;
 
     bool _canDash = true;
-    bool _isDashing = false;
+    [SerializeField]bool _isDashing = false;
     bool _dashRequested = false;
     Vector3 _dashDirection;
     float _dashStartTime;
@@ -82,18 +82,22 @@ public class Movement : MonoBehaviour
     public void Move(Vector3 move, bool isMoving)
     {
         isMoving = true;
-        // convert the world relative moveInput vector into a local-relative
-        // turn amount and forward amount required to head in the desired
-        // direction.
-        if (move.magnitude > 1f) move.Normalize();
-        move = transform.InverseTransformDirection(move);
-        move = Vector3.ProjectOnPlane(move, groundNormal);
-        turnAmount = Mathf.Atan2(move.x, move.z);
-        forwardAmount = move.z;
+        if (!_isDashing)
+        {
+            // convert the world relative moveInput vector into a local-relative
+            // turn amount and forward amount required to head in the desired
+            // direction.
+            if (move.magnitude > 1f) move.Normalize();
+            move = transform.InverseTransformDirection(move);
+            move = Vector3.ProjectOnPlane(move, groundNormal);
+            turnAmount = Mathf.Atan2(move.x, move.z);
+            forwardAmount = move.z;
 
-        ApplyExtraTurnRotation();
+            ApplyExtraTurnRotation();
 
-        transform.position += transform.forward * Time.deltaTime * forwardAmount * characterSpeed;
+            transform.position += transform.forward * Time.deltaTime * forwardAmount * characterSpeed;
+        }
+        
     }
 
     void ApplyExtraTurnRotation()
@@ -119,9 +123,24 @@ public class Movement : MonoBehaviour
 
     void DashProgress()
     {
+        /*
         float dashProgress = (Time.fixedTime - _dashStartTime) / dashDuration;
-        Vector3 dashVelocity = _dashDirection * (dashDistance / dashDuration);
+        Vector3 dashVelocity = _dashDirection * (dashDistance / dashDuration) ;
         rb.velocity = dashVelocity;
+
+        if (dashProgress >= 1f)
+        {
+            _isDashing = false;
+            _previousVelocity = rb.velocity;
+            _stopStartTime = Time.fixedTime;
+            Invoke(nameof(DashStopProgress), stopDuration);
+        }
+        */
+        float dashProgress = (Time.fixedTime - _dashStartTime) / dashDuration;
+        float remainingDistance = dashDistance * (1f - dashProgress);
+        float modifiedSpeed = remainingDistance / Time.deltaTime;
+
+        rb.velocity = _dashDirection * modifiedSpeed;
 
         if (dashProgress >= 1f)
         {

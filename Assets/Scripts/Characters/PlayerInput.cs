@@ -58,9 +58,10 @@ public class PlayerInput : MonoBehaviour
     {
         if (cc_movement.GetCanDash() && Input.GetKeyDown(KeyCode.Space))
         {
-            pm_playerManager.MyState = CharacterStates.Dashing;
+            
             cc_movement.SetDashRequested(true);
         }
+        
         
 
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -81,8 +82,13 @@ public class PlayerInput : MonoBehaviour
     private void FixedUpdate()
     {
 
+        if(pm_playerManager.MyState == CharacterStates.None)
+        {
+            MyMovement();
+        }
+        
 
-        MyMovement();
+        
 
     }
 

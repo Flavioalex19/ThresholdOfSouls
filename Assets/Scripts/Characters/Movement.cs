@@ -36,12 +36,10 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        /*
         if (_canDash && Input.GetKeyDown(KeyCode.Space))
         {
-            _dashRequested = true;//this will change in the player input
+            _dashRequested = true;
         }
-        */
     }
 
     private void FixedUpdate()
@@ -118,6 +116,7 @@ public class Movement : MonoBehaviour
             Invoke(nameof(EnableDash), dashCooldown);
         }
     }
+
     void DashProgress()
     {
         float dashProgress = (Time.fixedTime - _dashStartTime) / dashDuration;
@@ -129,8 +128,11 @@ public class Movement : MonoBehaviour
             _isDashing = false;
             _previousVelocity = rb.velocity;
             _stopStartTime = Time.fixedTime;
+            Invoke(nameof(DashStopProgress), stopDuration);
         }
+
     }
+
     void DashStopProgress()
     {
         float stopProgress = (Time.fixedTime - _stopStartTime) / stopDuration;
@@ -138,6 +140,7 @@ public class Movement : MonoBehaviour
 
         if (stopProgress >= 1f)
         {
+            print("Here");
             rb.velocity = Vector3.zero; // Stop the character completely
             _canDash = true;
         }
@@ -148,6 +151,7 @@ public class Movement : MonoBehaviour
         _canDash = true;
     }
 }
+
 
 
 

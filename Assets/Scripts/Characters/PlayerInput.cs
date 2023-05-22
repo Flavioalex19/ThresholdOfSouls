@@ -58,8 +58,10 @@ public class PlayerInput : MonoBehaviour
     {
         if (cc_movement.GetCanDash() && Input.GetKeyDown(KeyCode.Space))
         {
-            cc_movement.SetDashRequested(true);//this will change in the player input
+            pm_playerManager.MyState = CharacterStates.Dashing;
+            cc_movement.SetDashRequested(true);
         }
+        
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
@@ -78,23 +80,9 @@ public class PlayerInput : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        // read inputs
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-        // calculate move direction to pass to character
-        if (_cam != null)
-        {
-            // calculate camera relative direction to move:
-            _camForward = Vector3.Scale(_cam.forward, new Vector3(1, 0, 1)).normalized;
-            cc_move = v * _camForward + h * _cam.right;
-        }
-        else
-        {
-            // we use world-relative directions in the case of no main camera
-            cc_move = v * Vector3.forward + h * Vector3.right;
-        }
-        cc_movement.Move(cc_move, _isMoving);
 
+
+        MyMovement();
 
     }
 
@@ -116,6 +104,25 @@ public class PlayerInput : MonoBehaviour
         _isInteracting=isInteracting;
     }
     #endregion
+    void MyMovement()
+    {
+        // read inputs
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+        // calculate move direction to pass to character
+        if (_cam != null)
+        {
+            // calculate camera relative direction to move:
+            _camForward = Vector3.Scale(_cam.forward, new Vector3(1, 0, 1)).normalized;
+            cc_move = v * _camForward + h * _cam.right;
+        }
+        else
+        {
+            // we use world-relative directions in the case of no main camera
+            cc_move = v * Vector3.forward + h * Vector3.right;
+        }
+        cc_movement.Move(cc_move, _isMoving);
+    }
 
     void PlayerInteraction()
     {

@@ -9,6 +9,7 @@ public enum CharacterStates
     Searching,
     Fighting,
     Attacking,
+    Dashing
 
 }
 

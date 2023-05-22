@@ -536,10 +536,10 @@ MonoBehaviour:
   stationaryTurnSpeed: 720
   movingTurnSpeed: 720
   characterSpeed: 5
-  dashDistance: 5
-  dashDuration: 0.5
-  dashCooldown: 1
-  stopDuration: 0.5
+  dashDistance: 1
+  dashDuration: 1
+  dashCooldown: 0.5
+  stopDuration: 1
 --- !u!54 &1209701938
 Rigidbody:
   m_ObjectHideFlags: 0

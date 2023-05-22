@@ -6,15 +6,24 @@ public class PlayerInput : MonoBehaviour
 {
     #region Private Variables
     //Variables
+
     Transform _cam;// A reference to the main camera in the scenes transform
     Vector3 _camForward;// The current forward direction of the camera
-    Vector3 cc_move;
-    bool _isMoving;
 
-   
+    #region Movement Variables
+    Vector3 cc_move;//Vector For the movement
+    bool _isMoving;//Verify if the player is in movement
+    #endregion
+
+    #region Interaction Variables
+    bool _canInteract = false;//If the player is allow to interact
+    bool _isInteracting = false;//Verify if thge player is interacting with something
+    #endregion
+
 
     //Components
     Movement cc_movement;
+    PlayerManager pm_playerManager;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -32,12 +41,21 @@ public class PlayerInput : MonoBehaviour
         }
 
         cc_movement = GetComponent<Movement>();
+        pm_playerManager = GetComponent<PlayerManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (_canInteract)
+        {
+            //Input
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                _isInteracting = true;
+                pm_playerManager.MyState = CharacterStates.Interacting;
+            }
+        }
     }
     private void FixedUpdate()
     {
@@ -58,4 +76,24 @@ public class PlayerInput : MonoBehaviour
         }
         cc_movement.Move(cc_move, _isMoving);
     }
+
+    #region Get & Set
+    public bool GetCanInteract()
+    {
+        return _canInteract;
+    }
+    public void SetCanInteract(bool canInteract)
+    {
+        _canInteract = canInteract;
+    }
+    public bool GetIsInteracting()
+    {
+        return _isInteracting;
+    }
+    public void SetIsInteracting(bool isInteracting)
+    {
+        _isInteracting=isInteracting;
+    }
+
+    #endregion
 }

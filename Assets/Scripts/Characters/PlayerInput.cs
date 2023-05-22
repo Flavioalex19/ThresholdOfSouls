@@ -20,6 +20,8 @@ public class PlayerInput : MonoBehaviour
     bool _isInteracting = false;//Verify if thge player is interacting with something
     #endregion
 
+    public bool _isUsingSearchDevice = false;//If the player can use the search Device/Vision
+
 
     //Components
     Movement cc_movement;
@@ -47,15 +49,21 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_canInteract)
+
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
-            //Input
-            if (Input.GetKeyDown(KeyCode.E))
+            //NOTE: Maybe put a waiting to use, to not spam
+            _isUsingSearchDevice = !_isUsingSearchDevice;
+            if ( _isUsingSearchDevice)
             {
-                _isInteracting = true;
-                pm_playerManager.MyState = CharacterStates.Interacting;
+                pm_playerManager.MyState = CharacterStates.Searching;
             }
+            else pm_playerManager.MyState = CharacterStates.None;
+            //pm_playerManager.MyState = CharacterStates.Searching;
         }
+
+        PlayerInteraction();
+        
     }
     private void FixedUpdate()
     {
@@ -94,6 +102,19 @@ public class PlayerInput : MonoBehaviour
     {
         _isInteracting=isInteracting;
     }
-
     #endregion
+
+    void PlayerInteraction()
+    {
+        //If the player can Interact
+        if (_canInteract)
+        {
+            //Input
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                _isInteracting = true;
+                pm_playerManager.MyState = CharacterStates.Interacting;
+            }
+        }
+    }
 }

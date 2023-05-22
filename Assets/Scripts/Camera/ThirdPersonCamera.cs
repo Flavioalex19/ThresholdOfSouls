@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class ThirdPersonCamera : MonoBehaviour
 {
-    public Transform target;                // Target object to follow
-    public float distance = 5f;             // Distance from the target
-    public float heightOffset = 2f;         // Height offset from the target
-    public float rotationSpeed = 5f;        // Camera rotation speed
-    public float minVerticalAngle = -60f;   // Minimum vertical angle limit
-    public float maxVerticalAngle = 60f;    // Maximum vertical angle limit
+    [SerializeField] Transform _target;                // Target object to follow
+    [SerializeField] float _distance = 5f;             // Distance from the target
+    [SerializeField] float _heightOffset = 2f;         // Height offset from the target
+    [SerializeField] float _rotationSpeed = 5f;        // Camera rotation speed
+    [SerializeField] float _minVerticalAngle = -60f;   // Minimum vertical angle limit
+    [SerializeField] float _maxVerticalAngle = 60f;    // Maximum vertical angle limit
 
-    private float currentHorizontalAngle = 0f;
-    private float currentVerticalAngle = 0f;
+    private float _currentHorizontalAngle = 0f;
+    private float _currentVerticalAngle = 0f;
 
     private void FixedUpdate()
     {
         // Check if the target is assigned
-        if (target == null)
+        if (_target == null)
             return;
 
         // Get the rotation inputs from the mouse movement
@@ -25,20 +25,20 @@ public class ThirdPersonCamera : MonoBehaviour
         float rotationInputY = Input.GetAxis("Mouse Y");
 
         // Update the camera angles based on the mouse inputs
-        currentHorizontalAngle += rotationSpeed * rotationInputX;
-        currentVerticalAngle -= rotationSpeed * rotationInputY;
-        currentVerticalAngle = Mathf.Clamp(currentVerticalAngle, minVerticalAngle, maxVerticalAngle);
+        _currentHorizontalAngle += _rotationSpeed * rotationInputX;
+        _currentVerticalAngle -= _rotationSpeed * rotationInputY;
+        _currentVerticalAngle = Mathf.Clamp(_currentVerticalAngle, _minVerticalAngle, _maxVerticalAngle);
 
         // Calculate the rotation based on the current angles
-        Quaternion rotation = Quaternion.Euler(currentVerticalAngle, currentHorizontalAngle, 0f);
+        Quaternion rotation = Quaternion.Euler(_currentVerticalAngle, _currentHorizontalAngle, 0f);
 
         // Calculate the desired position of the camera with offset
-        Vector3 desiredPosition = target.position + rotation * new Vector3(0f, heightOffset, -distance);
+        Vector3 desiredPosition = _target.position + rotation * new Vector3(0f, _heightOffset, -_distance);
 
         // Smoothly move the camera towards the desired position
-        transform.position = Vector3.Lerp(transform.position, desiredPosition, rotationSpeed * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, desiredPosition, _rotationSpeed * Time.deltaTime);
 
         // Update the camera's look at target
-        transform.LookAt(target.position + Vector3.up * heightOffset);
+        transform.LookAt(_target.position + Vector3.up * _heightOffset);
     }
 }

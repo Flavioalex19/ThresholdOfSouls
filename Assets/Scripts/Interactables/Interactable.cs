@@ -5,21 +5,12 @@ using UnityEngine;
 public class Interactable : MonoBehaviour
 {
     //Variables
-    GameObject go_Player;
+    protected GameObject go_Player;
 
 
     private void Update()
     {
-        if (go_Player != null)
-        {
-            if (go_Player.GetComponent<PlayerInput>().GetIsInteracting())
-            {
-                //Change this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                go_Player.GetComponent<PlayerInput>().SetIsInteracting(false);
-                go_Player.GetComponent<PlayerManager>().MyState = CharacterStates.None;
-                Destroy(gameObject);
-            }
-        }
+        
     }
 
     private void OnTriggerEnter(Collider other)

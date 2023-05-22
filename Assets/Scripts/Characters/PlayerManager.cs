@@ -6,6 +6,7 @@ public enum CharacterStates
 {
     None,
     Interacting,
+    Searching,
     Fighting,
     Attacking,
 

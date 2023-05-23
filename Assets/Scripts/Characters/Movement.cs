@@ -38,7 +38,7 @@ public class Movement : MonoBehaviour
     {
         if (_canDash && Input.GetKeyDown(KeyCode.Space))
         {
-            _dashRequested = true;
+            //_dashRequested = true;
         }
     }
 
@@ -61,6 +61,10 @@ public class Movement : MonoBehaviour
     }
 
     #region Get & Set
+    public float GetForwardAmount()
+    {
+        return forwardAmount;
+    }
     public bool GetCanDash()
     {
         return _canDash;

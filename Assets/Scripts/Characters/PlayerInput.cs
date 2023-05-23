@@ -58,7 +58,6 @@ public class PlayerInput : MonoBehaviour
     {
         if (cc_movement.GetCanDash() && Input.GetKeyDown(KeyCode.Space))
         {
-            
             cc_movement.SetDashRequested(true);
         }
         

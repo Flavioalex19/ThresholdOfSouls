@@ -40,5 +40,14 @@ public class ThirdPersonCamera : MonoBehaviour
 
         // Update the camera's look at target
         transform.LookAt(_target.position + Vector3.up * _heightOffset);
+
+        // Check if the camera has reached the maximum or minimum vertical angle
+        if (_currentVerticalAngle <= _minVerticalAngle || _currentVerticalAngle >= _maxVerticalAngle)
+        {
+            // Reset the camera angles to prevent flipping
+            _currentVerticalAngle = Mathf.Clamp(_currentVerticalAngle, _minVerticalAngle, _maxVerticalAngle);
+            _currentHorizontalAngle -= _rotationSpeed * rotationInputX;
+        }
     }
 }
+

@@ -60,8 +60,11 @@ public class PlayerInput : MonoBehaviour
         {
             cc_movement.SetDashRequested(true);
         }
-        
-        
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            pm_playerManager.SetIsFighting(true);
+        }
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
@@ -71,7 +74,7 @@ public class PlayerInput : MonoBehaviour
             {
                 pm_playerManager.MyState = CharacterStates.Searching;
             }
-            else pm_playerManager.MyState = CharacterStates.None;
+            else pm_playerManager.MyState = CharacterStates.Neutral;
             //pm_playerManager.MyState = CharacterStates.Searching;
         }
 
@@ -81,7 +84,7 @@ public class PlayerInput : MonoBehaviour
     private void FixedUpdate()
     {
 
-        if(pm_playerManager.MyState == CharacterStates.None)
+        if(pm_playerManager.MyState == CharacterStates.Neutral || pm_playerManager.MyState == CharacterStates.Fighting)
         {
             MyMovement();
         }

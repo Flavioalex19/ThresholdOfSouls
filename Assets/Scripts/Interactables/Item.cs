@@ -18,7 +18,7 @@ public class Item : Interactable
             if (go_Player.GetComponent<PlayerInput>().GetIsInteracting())
             {
                 go_Player.GetComponent<PlayerInput>().SetIsInteracting(false);
-                go_Player.GetComponent<PlayerManager>().MyState = CharacterStates.None;
+                go_Player.GetComponent<PlayerManager>().MyState = CharacterStates.Neutral;
                 //go_Player = null;
                 Destroy(gameObject);
             }

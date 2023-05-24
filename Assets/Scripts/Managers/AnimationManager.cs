@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class AnimationManager : MonoBehaviour
 {
-
+    PlayerInput input;
+    PlayerManager pm_manager;
     Movement movement;
     Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
+        input = GetComponent<PlayerInput>();
+        pm_manager = GetComponent<PlayerManager>();
         movement = GetComponent<Movement>();
         animator = GetComponent<Animator>();
     }
@@ -19,6 +22,7 @@ public class AnimationManager : MonoBehaviour
     void Update()
     {
         animator.SetFloat("Forward", movement.GetForwardAmount());
-        
+        animator.SetBool("isRunning", input.GetIsSprinting());
+        animator.SetBool("isFighting", pm_manager.GetIsFighting());
     }
 }

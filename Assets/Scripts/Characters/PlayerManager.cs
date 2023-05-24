@@ -9,7 +9,8 @@ public enum CharacterStates
     Searching,
     Fighting,
     Attacking,
-    Dashing
+    Dashing,
+    Waiting
 
 }
 
@@ -67,6 +68,8 @@ public class PlayerManager : MonoBehaviour
             case CharacterStates.Attacking:
                 break;
             case CharacterStates.Dashing:
+                break;
+            case CharacterStates.Waiting: 
                 break;
             default:
                 break;

@@ -13,6 +13,7 @@ public class PlayerInput : MonoBehaviour
     #region Movement Variables
     Vector3 cc_move;//Vector For the movement
     bool _isMoving;//Verify if the player is in movement
+    bool _isSprinting = false;
     #endregion
 
     /*
@@ -78,6 +79,9 @@ public class PlayerInput : MonoBehaviour
             //pm_playerManager.MyState = CharacterStates.Searching;
         }
 
+        if(Input.GetKey(KeyCode.LeftShift)) _isSprinting = true;
+        else _isSprinting = false;
+
         PlayerInteraction();
         
     }
@@ -111,6 +115,10 @@ public class PlayerInput : MonoBehaviour
     {
         _isInteracting=isInteracting;
     }
+    public bool GetIsSprinting()
+    {
+        return _isSprinting;
+    }
     #endregion
     void MyMovement()
     {
@@ -129,7 +137,7 @@ public class PlayerInput : MonoBehaviour
             // we use world-relative directions in the case of no main camera
             cc_move = v * Vector3.forward + h * Vector3.right;
         }
-        cc_movement.Move(cc_move, _isMoving);
+        cc_movement.Move(cc_move, _isMoving, _isSprinting);
     }
 
     void PlayerInteraction()

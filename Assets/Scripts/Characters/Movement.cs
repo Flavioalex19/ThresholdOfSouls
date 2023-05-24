@@ -83,7 +83,7 @@ public class Movement : MonoBehaviour
     }
     #endregion
 
-    public void Move(Vector3 move, bool isMoving)
+    public void Move(Vector3 move, bool isMoving, bool isSprinting)
     {
         isMoving = true;
         if (!_isDashing)
@@ -98,6 +98,8 @@ public class Movement : MonoBehaviour
             forwardAmount = move.z;
 
             ApplyExtraTurnRotation();
+
+            if (isSprinting) forwardAmount = forwardAmount * 2;
 
             transform.position += transform.forward * Time.deltaTime * forwardAmount * characterSpeed;
         }

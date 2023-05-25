@@ -11,7 +11,7 @@ public class Item : Interactable
         ItemInteraction();
     }
 
-    void ItemInteraction()
+    protected virtual void ItemInteraction()
     {
         if (go_Player != null)
         {

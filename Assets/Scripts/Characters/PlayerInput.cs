@@ -99,26 +99,11 @@ public class PlayerInput : MonoBehaviour
     }
 
     #region Get & Set
-    public bool GetCanInteract()
-    {
-        return _canInteract;
-    }
-    public void SetCanInteract(bool canInteract)
-    {
-        _canInteract = canInteract;
-    }
-    public bool GetIsInteracting()
-    {
-        return _isInteracting;
-    }
-    public void SetIsInteracting(bool isInteracting)
-    {
-        _isInteracting=isInteracting;
-    }
-    public bool GetIsSprinting()
-    {
-        return _isSprinting;
-    }
+    public bool GetCanInteract() { return _canInteract; }
+    public void SetCanInteract(bool canInteract) { _canInteract = canInteract;}
+    public bool GetIsInteracting() { return _isInteracting; }
+    public void SetIsInteracting(bool isInteracting) { _isInteracting=isInteracting; }
+    public bool GetIsSprinting() { return _isSprinting; }
     #endregion
     void MyMovement()
     {

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d163f7d1449bd47840effd341526c8, type: 3}
+  m_Name: Enrage
+  m_EditorClassIdentifier: 
+  skill_name: 
+  skill_description: 
+  skill_index: 1
+  skill_lvl: 0
+  skill_manaCost: 0
+  skill_totalXP: 0
+  skill_damage: 0
+  skill_emblemImage: {fileID: 21300000, guid: 1f7df74fe233d414bbb05b53e78e882b, type: 3}

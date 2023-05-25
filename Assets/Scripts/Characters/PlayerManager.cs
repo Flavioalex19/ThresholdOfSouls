@@ -17,8 +17,12 @@ public enum CharacterStates
 public class PlayerManager : MonoBehaviour
 {
     public CharacterStates MyState;
+    #region Skill Variables
+    public Skills _skillSlot0;
+    public Skills _skillSlot1;
+    #endregion
 
-    bool _isFighting = false;
+    bool _isFighting = false;//if the player is in a fighting zone
 
     // Start is called before the first frame update
     void Start()
@@ -39,15 +43,10 @@ public class PlayerManager : MonoBehaviour
     }
 
     #region Get & Set
-
-    public bool GetIsFighting()
-    {
-        return _isFighting;
-    }
-    public void SetIsFighting(bool isFighting)
-    {
-        _isFighting = isFighting;
-    }
+    public Skills GetSkillSlot0() { return _skillSlot0; }
+    public Skills GetSkillSlot1() { return _skillSlot1; }
+    public bool GetIsFighting(){ return _isFighting;}
+    public void SetIsFighting(bool isFighting){ _isFighting = isFighting; }
 
     #endregion
 
@@ -63,7 +62,6 @@ public class PlayerManager : MonoBehaviour
             case CharacterStates.Searching:
                 break;
             case CharacterStates.Fighting:
-                
                 break;
             case CharacterStates.Attacking:
                 break;
@@ -75,8 +73,14 @@ public class PlayerManager : MonoBehaviour
                 break;
         }
     }
-    public void ReturnToNeutral()
-    {
-        MyState = CharacterStates.Neutral;
-    }
+    //Return to neutral state
+    public void ReturnToNeutral() { MyState = CharacterStates.Neutral;}
+
+    #region Skill Slots 
+    public void AddSkillToSkillSlot0(Skills skills){ _skillSlot0 = skills;}
+    public void AddSkillToSkillSlot1(Skills skills) { _skillSlot1 = skills; }
+    public void RemoveSkillOnSkillSlot0() { _skillSlot0 = null;}
+    public void RemoveSkillOnSkillSlot1() { _skillSlot1 = null;}
+    #endregion
+
 }

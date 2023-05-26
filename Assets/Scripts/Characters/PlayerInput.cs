@@ -32,8 +32,10 @@ public class PlayerInput : MonoBehaviour
     
 
     //Components
+    Stats _stats;
     Movement cc_movement;
     PlayerManager pm_playerManager;
+    Inventory inv_inventory;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -50,8 +52,10 @@ public class PlayerInput : MonoBehaviour
             // we use self-relative controls in this case, which probably isn't what the user wants, but hey, we warned them!
         }
 
+        _stats = GetComponent<Stats>();
         cc_movement = GetComponent<Movement>();
         pm_playerManager = GetComponent<PlayerManager>();
+        inv_inventory = GetComponent<Inventory>();
     }
 
     // Update is called once per frame
@@ -64,7 +68,9 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            pm_playerManager.SetIsFighting(true);
+            //pm_playerManager.SetIsFighting(true);
+            pm_playerManager.SetIsWithdrawing(true);
+            pm_playerManager.MyState = CharacterStates.Withdrawing;
         }
 
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -77,6 +83,23 @@ public class PlayerInput : MonoBehaviour
             }
             else pm_playerManager.MyState = CharacterStates.Neutral;
             //pm_playerManager.MyState = CharacterStates.Searching;
+        }
+
+        //if is Fighting - TODO!!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (inv_inventory.GetSkillSlot0())
+            {
+                if (_stats.CheckManaToCast((inv_inventory.GetSkillSlot0())))
+                {
+                    _stats.SetMana(_stats.GetMana() - inv_inventory.GetSkillSlot0().GetSkillManaCost());
+                    pm_playerManager.SetIsCastingSpell(true);
+                    //pm_playerManager.MyState = CharacterStates.CastingSpell;
+                }
+                
+            }
+            else print("Not");
+                
         }
 
         if(Input.GetKey(KeyCode.LeftShift)) _isSprinting = true;

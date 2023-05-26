@@ -23,6 +23,8 @@ public class AnimationManager : MonoBehaviour
     {
         animator.SetFloat("Forward", movement.GetForwardAmount());
         animator.SetBool("isRunning", input.GetIsSprinting());
+        animator.SetBool("isWithdrawing", pm_manager.GetIsWithdrawing());
         animator.SetBool("isFighting", pm_manager.GetIsFighting());
+        animator.SetBool("isCasting", pm_manager.GetIsCastingSpell());
     }
 }

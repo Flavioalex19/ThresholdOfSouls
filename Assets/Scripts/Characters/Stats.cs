@@ -53,6 +53,14 @@ public class Stats : MonoBehaviour
     {
         _mana = mana;
     }
+    public float GetMaxMana()
+    {
+        return _maxMana;
+    }
+    public void SetMaxMana(float maxMana)
+    {
+        _maxMana = maxMana;
+    }
     public float GetXP()
     {
         return _xp;
@@ -71,5 +79,14 @@ public class Stats : MonoBehaviour
     }
     
     #endregion
+
+    public bool CheckManaToCast(Skills skills)
+    {
+        if(skills.GetSkillManaCost() < _mana)
+        {
+            return true;
+        }
+        else return false;
+    }
 
 }

@@ -16,11 +16,14 @@ public class Skills : ScriptableObject
     [SerializeField] float skill_manaCost;
     [SerializeField] float skill_totalXP;
     [SerializeField] float skill_damage;
+    [SerializeField] float skill_cooldownReset;
+    [SerializeField] float skill_cooldown;
     [SerializeField] Sprite skill_emblemImage;
 
     #endregion
 
     public int GetSkillIndex() { return skill_index; }
+    public float GetSkillManaCost() { return skill_manaCost; }
     public Sprite GetSkillEmblemSprite() { return skill_emblemImage; }
 
 }

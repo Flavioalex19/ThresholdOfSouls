@@ -16,7 +16,9 @@ MonoBehaviour:
   skill_description: 
   skill_index: 1
   skill_lvl: 0
-  skill_manaCost: 0
+  skill_manaCost: 10
   skill_totalXP: 0
   skill_damage: 0
+  skill_cooldownReset: 0
+  skill_cooldown: 0
   skill_emblemImage: {fileID: 21300000, guid: 1f7df74fe233d414bbb05b53e78e882b, type: 3}

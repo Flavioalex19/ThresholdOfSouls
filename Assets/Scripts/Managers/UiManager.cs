@@ -7,11 +7,13 @@ using TMPro;
 public class UiManager : MonoBehaviour
 {
     #region Player Bars
+    [Header("HP/Mana")]
     [SerializeField] Image ui_hp;
     [SerializeField] Image ui_mana;
     #endregion
 
     #region Skills Portraits
+    [Header("Skill Icons")]
     [SerializeField]Sprite ui_sprite_skill_emptySkill;//if the player has no skill equiped in tje corresponded slot, this will be placed
     [SerializeField] Image ui_image_skill0;
     [SerializeField] Image ui_image_skill1;
@@ -29,7 +31,8 @@ public class UiManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        ui_hp.fillAmount = cc_Player.GetComponent<Stats>().GetHp()/cc_Player.GetComponent<Stats>().GetMaxHp();
+        ui_mana.fillAmount = cc_Player.GetComponent <Stats>().GetMana() / cc_Player.GetComponent<Stats>().GetMaxMana();
     }
 
     public void UpdateSkillSlot0UI(Skills skills) { ui_image_skill0.sprite = skills.GetSkillEmblemSprite();}

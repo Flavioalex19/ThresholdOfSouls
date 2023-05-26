@@ -26,6 +26,7 @@ public class PlayerManager : MonoBehaviour
 
     bool _isWithdrawing = false;
     bool _isFighting = false;//if the player is in a fighting zone
+    public bool _isAttacking = false;
     bool _isCastingSpell = false;
 
     public GameObject weapon;
@@ -33,11 +34,13 @@ public class PlayerManager : MonoBehaviour
     public Transform weaponHolder;//when pick up a new weapon add to the holder
 
     Stats cc_Stats;
+    Combo combo;
 
     // Start is called before the first frame update
     void Start()
     {
         cc_Stats = GetComponent<Stats>();
+        combo = GetComponent<Combo>();
     }
 
     // Update is called once per frame
@@ -45,7 +48,12 @@ public class PlayerManager : MonoBehaviour
     {
         if (_isFighting)
         {
+            
             MyState = CharacterStates.Fighting;
+        }
+        if (_isAttacking)
+        {
+            MyState = CharacterStates.Attacking;
         }
         if (_isCastingSpell)
         {
@@ -63,6 +71,8 @@ public class PlayerManager : MonoBehaviour
     public void SetIsWithdrawing(bool isWithdrawing) { _isWithdrawing = isWithdrawing; }
     public bool GetIsFighting(){ return _isFighting;}
     public void SetIsFighting(bool isFighting){ _isFighting = isFighting; }
+    public bool GetIsAttacking() { return _isAttacking;}
+    public void SetIsAttacking(bool isAttacking) { _isAttacking = isAttacking; }
     public bool GetIsCastingSpell() { return _isCastingSpell;}
     public void SetIsCastingSpell(bool isCastingSpell) { _isCastingSpell= isCastingSpell; }
 
@@ -85,6 +95,7 @@ public class PlayerManager : MonoBehaviour
             case CharacterStates.Fighting:
                 break;
             case CharacterStates.Attacking:
+                StartCoroutine(Attacking());
                 break;
             case CharacterStates.CastingSpell: 
                 CastSpellAnimationEvent();
@@ -92,6 +103,7 @@ public class PlayerManager : MonoBehaviour
             case CharacterStates.Dashing:
                 break;
             case CharacterStates.Waiting: 
+                StartCoroutine (Waiting());
                 break;
             default:
                 break;
@@ -104,14 +116,38 @@ public class PlayerManager : MonoBehaviour
     }
     IEnumerator Withdrawing()
     {
-        print("Here");
-        weapon.transform.SetParent(weaponSocket);
-        weapon.transform.localPosition = Vector3.zero;
-        weapon.transform.localRotation = Quaternion.identity;
+       
+        
         yield return new WaitForSeconds(1f);
         _isWithdrawing = false;
         //MyState = CharacterStates.Fighting;
         _isFighting = true;
+    }
+    public void AttachWeaponToHand()
+    {
+        weapon.transform.SetParent(weaponSocket);
+        weapon.transform.localPosition = Vector3.zero;
+        weapon.transform.localRotation = Quaternion.identity;
+    }
+    IEnumerator Attacking()
+    {
+        /*
+        yield return new WaitForSeconds(.5f);
+        _isAttacking = false;
+        combo.currentComboCount = 0;
+        MyState = CharacterStates.Waiting;
+        */
+        // Play the attack animation here
+        // For example: animator.Play("Attack");
+
+        // Wait for the animation to complete
+        yield return new WaitForSeconds(.85f);
+
+        // Reset the combo count and transition to the appropriate state
+        _isAttacking = false;
+        combo.currentComboCount = 0;
+        MyState = CharacterStates.Fighting;
+
     }
     void CastSpellAnimationEvent()
     {
@@ -122,6 +158,12 @@ public class PlayerManager : MonoBehaviour
         _isCastingSpell = false;
         yield return new WaitForSeconds(1f);
         _isFighting = true;
+        MyState = CharacterStates.Fighting;
+    }
+
+    IEnumerator Waiting()
+    {
+        yield return new WaitForSeconds(.3f);
         MyState = CharacterStates.Fighting;
     }
 

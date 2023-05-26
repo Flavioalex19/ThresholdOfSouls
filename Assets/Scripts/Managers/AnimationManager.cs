@@ -7,6 +7,7 @@ public class AnimationManager : MonoBehaviour
     PlayerInput input;
     PlayerManager pm_manager;
     Movement movement;
+    Combo combo;
     Animator animator;
 
     // Start is called before the first frame update
@@ -15,6 +16,7 @@ public class AnimationManager : MonoBehaviour
         input = GetComponent<PlayerInput>();
         pm_manager = GetComponent<PlayerManager>();
         movement = GetComponent<Movement>();
+        combo = GetComponent<Combo>();
         animator = GetComponent<Animator>();
     }
 
@@ -25,6 +27,8 @@ public class AnimationManager : MonoBehaviour
         animator.SetBool("isRunning", input.GetIsSprinting());
         animator.SetBool("isWithdrawing", pm_manager.GetIsWithdrawing());
         animator.SetBool("isFighting", pm_manager.GetIsFighting());
+        animator.SetBool("canAttack", pm_manager.GetIsAttacking());
+        animator.SetInteger("comboCount", combo.currentComboCount);
         animator.SetBool("isCasting", pm_manager.GetIsCastingSpell());
     }
 }

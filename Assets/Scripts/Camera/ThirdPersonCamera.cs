@@ -14,6 +14,8 @@ public class ThirdPersonCamera : MonoBehaviour
     private float _currentHorizontalAngle = 0f;
     private float _currentVerticalAngle = 0f;
 
+    public Transform Enemy;
+
     private void FixedUpdate()
     {
         // Check if the target is assigned
@@ -38,6 +40,7 @@ public class ThirdPersonCamera : MonoBehaviour
         // Smoothly move the camera towards the desired position
         transform.position = Vector3.Lerp(transform.position, desiredPosition, _rotationSpeed * Time.deltaTime);
 
+        
         // Update the camera's look at target
         transform.LookAt(_target.position + Vector3.up * _heightOffset);
 

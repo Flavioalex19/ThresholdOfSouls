@@ -85,6 +85,13 @@ public class PlayerInput : MonoBehaviour
             //pm_playerManager.MyState = CharacterStates.Searching;
         }
 
+        #region Combat
+
+        if (Input.GetMouseButtonDown(0) && pm_playerManager.MyState == CharacterStates.Fighting)
+        {
+            //pm_playerManager.SetIsAttacking(true);
+        }
+
         //if is Fighting - TODO!!!!!!!!!!!!!!!!!!!!!!!!!!
         if (Input.GetMouseButtonDown(1))
         {
@@ -101,8 +108,9 @@ public class PlayerInput : MonoBehaviour
             else print("Not");
                 
         }
+        #endregion
 
-        if(Input.GetKey(KeyCode.LeftShift)) _isSprinting = true;
+        if (Input.GetKey(KeyCode.LeftShift)) _isSprinting = true;
         else _isSprinting = false;
 
         PlayerInteraction();

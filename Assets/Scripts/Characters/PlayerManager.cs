@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public enum CharacterStates
 {
@@ -33,8 +34,32 @@ public class PlayerManager : MonoBehaviour
     public Transform weaponSocket;
     public Transform weaponHolder;//when pick up a new weapon add to the holder
 
+
+    public GameObject vfx_spell_lumenStrike;
+
     Stats cc_Stats;
     Combo combo;
+
+
+    private void Awake()
+    {
+        foreach (Transform child in vfx_spell_lumenStrike.transform)
+        {
+            // Get the ParticleSystem or VisualEffect component of each child
+            ParticleSystem particleSystem = child.GetComponent<ParticleSystem>();
+            VisualEffect visualEffect = child.GetComponent<VisualEffect>();
+
+            // Play the VFX if a component is found
+            if (particleSystem != null)
+            {
+                particleSystem.Stop();
+            }
+            else if (visualEffect != null)
+            {
+                visualEffect.Stop();
+            }
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -176,5 +201,25 @@ public class PlayerManager : MonoBehaviour
     public void RemoveSkillOnSkillSlot0() { _skillSlot0 = null;}
     public void RemoveSkillOnSkillSlot1() { _skillSlot1 = null;}
     #endregion
+
+    public void  PlayVFXAnimation()
+    {
+        foreach (Transform child in vfx_spell_lumenStrike.transform)
+        {
+            // Get the ParticleSystem or VisualEffect component of each child
+            ParticleSystem particleSystem = child.GetComponent<ParticleSystem>();
+            VisualEffect visualEffect = child.GetComponent<VisualEffect>();
+
+            // Play the VFX if a component is found
+            if (particleSystem != null)
+            {
+                particleSystem.Play();
+            }
+            else if (visualEffect != null)
+            {
+                visualEffect.Play();
+            }
+        }
+    }
 
 }

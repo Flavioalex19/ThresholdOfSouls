@@ -5,13 +5,19 @@ using UnityEngine;
 public class Stats : MonoBehaviour
 {
 
-    [SerializeField] int _lvl = 1;
-    [SerializeField] float _hp;
-    [SerializeField] float _maxHp;
+    [SerializeField] protected int _lvl = 1;
+    [SerializeField] protected float _hp;
+    [SerializeField] protected float _maxHp;
     [SerializeField] float _mana;
     [SerializeField] float _maxMana;
     [SerializeField] float _xp;
     [SerializeField] float _maxXp;
+    [SerializeField]public  float _attack;
+
+    [SerializeField]protected bool _hasBeenHit = false;
+    protected bool _isInvinsible = false;
+
+    [SerializeField]protected ParticleSystem _particleSystem_Hit;
 
 
     private void Start()
@@ -87,6 +93,20 @@ public class Stats : MonoBehaviour
             return true;
         }
         else return false;
+    }
+
+    public void AttackStart()
+    {
+
+    }
+    public void AttackEnd()
+    {
+
+    }
+
+    public void Hit()
+    {
+        _particleSystem_Hit.Play();
     }
 
 }

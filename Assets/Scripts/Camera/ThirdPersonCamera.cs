@@ -33,6 +33,7 @@ public class ThirdPersonCamera : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             _lockOnTarget = !_lockOnTarget;
+            _enemyTarget.GetComponent<Enemy>().SetIsTarget(_lockOnTarget);//me00000
         }
     }
     private void FixedUpdate()
@@ -63,7 +64,7 @@ public class ThirdPersonCamera : MonoBehaviour
             Vector3 targetOffset = _enemyTarget.position - _playerTransform.position;
             desiredPosition = _playerTransform.position - targetOffset.normalized * (_distance + _lockOnDistanceIncrease);
             lookAtTarget = _enemyTarget.position;
-
+            
             // Increase the height when locked on
             desiredPosition += Vector3.up * (_heightOffset + _lockOnHeightIncrease);
         }

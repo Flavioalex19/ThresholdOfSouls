@@ -37,6 +37,9 @@ public class PlayerManager : MonoBehaviour
 
     public GameObject vfx_spell_lumenStrike;
 
+    public AudioSource sfx_weaponSoundSource;
+    public AudioSource sfx_step;
+
     Stats cc_Stats;
     Combo combo;
 
@@ -222,4 +225,12 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void SFXSetp()
+    {
+        sfx_step.Play();
+    }
+    public void SFXSwordAttack()
+    {
+        sfx_weaponSoundSource.Play();
+    }
 }

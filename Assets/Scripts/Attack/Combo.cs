@@ -28,7 +28,6 @@ public class Combo : MonoBehaviour
             // If enough time has passed since the last attack, reset the combo count
             if (timeSinceLastAttack > comboTimeThreshold)
             {
-                print("Here");
                 currentComboCount = 0;
                 pm_playerManager.SetIsAttacking(false);
                 pm_playerManager.MyState = CharacterStates.Fighting;
@@ -44,7 +43,6 @@ public class Combo : MonoBehaviour
             // If the combo count exceeds the maximum, reset it
             if (currentComboCount > maxComboCount)
             {
-                print("Heeeee");
                 currentComboCount = 1;
                 //pm_playerManager.SetIsAttacking(false);
             }

@@ -29,6 +29,8 @@ public class Enemy : Stats
         else animator_ui_enemyHP.SetBool("isOn", _isTarget);
 
         ui_enemyHP_Bar.fillAmount = _hp/_maxHp;
+
+        if (_hp < 0) Destroy(gameObject);
     }
 
     public void SetIsTarget(bool isTarget)

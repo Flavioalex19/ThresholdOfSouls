@@ -11,6 +11,7 @@ public enum EnemyStates
     Patrolling,
     Pursuing,
     Attacking,
+    AttackRecovery,
     RecoverFromAttack,
     Waiting
 }
@@ -26,9 +27,14 @@ public class AiBehavior : MonoBehaviour
 
     //Pursuing/Attacaking Variables
     [SerializeField]Transform _myTarget;
+    [SerializeField] bool _isAttacking = false;
+    [SerializeField] bool _canAttack = false;
+    [SerializeField] float _recoveringTimeReset = 5f;
+    [SerializeField] float _recoveringTime;
+
 
     //Waiting/searching varoables
-    [SerializeField]float _waitingTime = 2f;
+    [SerializeField]float _waitingTime = 100f;
 
     //Components
     Perception _perception;
@@ -47,6 +53,8 @@ public class AiBehavior : MonoBehaviour
         _perception.DetectTarget();
         if (_perception.DetectTarget()) enemyStates = EnemyStates.Pursuing;//If the enemy detected a target go to pursuing state
 
+        
+
         switch (enemyStates)
         {
             case EnemyStates.None:
@@ -62,8 +70,12 @@ public class AiBehavior : MonoBehaviour
                 break;
             case EnemyStates.Attacking:
                 //Attack
+                Attacking();
+                break;
+            case EnemyStates.AttackRecovery:
                 break;
             case EnemyStates.RecoverFromAttack:
+                RecoverFromAttack();
                 break;
             case EnemyStates.Waiting:
                 Waiting();
@@ -75,16 +87,22 @@ public class AiBehavior : MonoBehaviour
 
         if (enemyStates == EnemyStates.Pursuing) _agent.speed = 4.5f;
         else _agent.speed = 2f;
+
+        if (enemyStates == EnemyStates.Attacking) _canAttack = true;
+        else _canAttack = false;
     }
+    //Choose new random waypont
     void ChooseWp()
     {
         int dice;
         dice = Random.Range(0, list_PatrollWaypoints.Count);
         if(list_PatrollWaypoints[dice] == _wp_target) dice = Random.Range(0, list_PatrollWaypoints.Count);//If the roll dice is the same as the current waypoint target, re-roll
         _wp_target = list_PatrollWaypoints[dice];
-        //transform.LookAt( _wp_target );
-        RotateTowardsTarget(_wp_target, 20f);
+        transform.LookAt( _wp_target );
+        RotateTowardsTarget(_wp_target, 1f);
+
     }
+    #region Patrolling
     void GoToWaypoint()
     {
         if(_wp_target != null && !_hasArrived)
@@ -98,6 +116,8 @@ public class AiBehavior : MonoBehaviour
 
         }
     }
+    #endregion
+    #region Pursuing
     void Pursuing()
     {
         
@@ -113,11 +133,13 @@ public class AiBehavior : MonoBehaviour
 
 
             }
+            else _agent.isStopped = false;
             
         }
         else enemyStates = EnemyStates.Waiting;
         
     }
+    #endregion
     void Waiting()
     {
         Wait();
@@ -133,11 +155,41 @@ public class AiBehavior : MonoBehaviour
         ChooseWp();
         enemyStates = EnemyStates.Patrolling;
     }
+
+    #region Attacking
+    void Attacking()
+    {
+        _recoveringTime = _recoveringTimeReset;
+        _agent.isStopped = true;
+        _canAttack = true;
+        enemyStates = EnemyStates.RecoverFromAttack;
+    }
+    void RecoverFromAttack()
+    {
+        float dist;
+        dist = Vector3.Distance(transform.position, _myTarget.position);
+        _canAttack = false;
+        while( _recoveringTime > 0)
+        {
+            _recoveringTime -= Time.deltaTime;
+        }
+        if(dist > _agent.stoppingDistance)
+        {
+            enemyStates = EnemyStates.Pursuing;
+        }
+        else enemyStates= EnemyStates.Attacking;
+
+    }
+    #endregion
     public void RotateTowardsTarget(Transform target, float rotationSpeed)
     {
         Vector3 direction = (target.position - transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
-    
+    public bool GetCanAttack()
+    {
+        return _canAttack;
+    }
+
 }
